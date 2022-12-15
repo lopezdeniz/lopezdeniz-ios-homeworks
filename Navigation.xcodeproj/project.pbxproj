@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D01C51D2294B2CBB007A4F98 /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01C51D1294B2CBB007A4F98 /* ProfileHeaderView.swift */; };
+		D01C51D4294B2D78007A4F98 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01C51D3294B2D78007A4F98 /* ProfileViewController.swift */; };
 		D0B9F9DE294357E7009F40A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B9F9DD294357E7009F40A9 /* AppDelegate.swift */; };
 		D0B9F9E0294357E7009F40A9 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B9F9DF294357E7009F40A9 /* SceneDelegate.swift */; };
 		D0B9F9E7294357E9009F40A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D0B9F9E6294357E9009F40A9 /* Assets.xcassets */; };
@@ -15,10 +17,12 @@
 		D0C86D932944F33800C0E06E /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C86D922944F33800C0E06E /* Post.swift */; };
 		D0C86D952944F53E00C0E06E /* InfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C86D942944F53E00C0E06E /* InfoViewController.swift */; };
 		D0F5F0C62944C8A000F7F6CE /* FeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F5F0C52944C8A000F7F6CE /* FeedViewController.swift */; };
-		D0F5F0C82944C8DC00F7F6CE /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F5F0C72944C8DC00F7F6CE /* ProfileViewController.swift */; };
+		D0F5F0C82944C8DC00F7F6CE /* ProfileViewController1.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F5F0C72944C8DC00F7F6CE /* ProfileViewController1.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D01C51D1294B2CBB007A4F98 /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		D01C51D3294B2D78007A4F98 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		D0B9F9DA294357E7009F40A9 /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0B9F9DD294357E7009F40A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D0B9F9DF294357E7009F40A9 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -29,7 +33,7 @@
 		D0C86D922944F33800C0E06E /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
 		D0C86D942944F53E00C0E06E /* InfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoViewController.swift; sourceTree = "<group>"; };
 		D0F5F0C52944C8A000F7F6CE /* FeedViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewController.swift; sourceTree = "<group>"; };
-		D0F5F0C72944C8DC00F7F6CE /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		D0F5F0C72944C8DC00F7F6CE /* ProfileViewController1.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController1.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -46,8 +50,22 @@
 		D01C51D0294B29BD007A4F98 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				D01C51D1294B2CBB007A4F98 /* ProfileHeaderView.swift */,
+				D01C51D3294B2D78007A4F98 /* ProfileViewController.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		D01C51D5294B2E7C007A4F98 /* VKGrup */ = {
+			isa = PBXGroup;
+			children = (
+				D0F5F0C72944C8DC00F7F6CE /* ProfileViewController1.swift */,
+				D0C86D902944F31400C0E06E /* PostViewController.swift */,
+				D0F5F0C52944C8A000F7F6CE /* FeedViewController.swift */,
+				D0C86D942944F53E00C0E06E /* InfoViewController.swift */,
+				D0C86D922944F33800C0E06E /* Post.swift */,
+			);
+			path = VKGrup;
 			sourceTree = "<group>";
 		};
 		D0B9F9D1294357E7009F40A9 = {
@@ -71,11 +89,7 @@
 			children = (
 				D0B9F9DD294357E7009F40A9 /* AppDelegate.swift */,
 				D0B9F9DF294357E7009F40A9 /* SceneDelegate.swift */,
-				D0F5F0C52944C8A000F7F6CE /* FeedViewController.swift */,
-				D0F5F0C72944C8DC00F7F6CE /* ProfileViewController.swift */,
-				D0C86D902944F31400C0E06E /* PostViewController.swift */,
-				D0C86D942944F53E00C0E06E /* InfoViewController.swift */,
-				D0C86D922944F33800C0E06E /* Post.swift */,
+				D01C51D5294B2E7C007A4F98 /* VKGrup */,
 				D01C51D0294B29BD007A4F98 /* Profile */,
 				D0B9F9E6294357E9009F40A9 /* Assets.xcassets */,
 				D0B9F9E8294357E9009F40A9 /* LaunchScreen.storyboard */,
@@ -155,12 +169,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D0C86D912944F31400C0E06E /* PostViewController.swift in Sources */,
-				D0F5F0C82944C8DC00F7F6CE /* ProfileViewController.swift in Sources */,
+				D0F5F0C82944C8DC00F7F6CE /* ProfileViewController1.swift in Sources */,
 				D0F5F0C62944C8A000F7F6CE /* FeedViewController.swift in Sources */,
 				D0C86D952944F53E00C0E06E /* InfoViewController.swift in Sources */,
 				D0B9F9DE294357E7009F40A9 /* AppDelegate.swift in Sources */,
 				D0C86D932944F33800C0E06E /* Post.swift in Sources */,
+				D01C51D4294B2D78007A4F98 /* ProfileViewController.swift in Sources */,
 				D0B9F9E0294357E7009F40A9 /* SceneDelegate.swift in Sources */,
+				D01C51D2294B2CBB007A4F98 /* ProfileHeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,7 +327,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = netology.Navigation;
+				PRODUCT_BUNDLE_IDENTIFIER = "netology-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -338,7 +354,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = netology.Navigation;
+				PRODUCT_BUNDLE_IDENTIFIER = "netology-";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
