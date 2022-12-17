@@ -63,7 +63,7 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
 
     private lazy var setStatusButton: UIButton = {
         let button = UIButton()
-        button.setTitle("Set status", for: .normal)
+        button.setTitle("Change status", for: .normal)
         button.backgroundColor = UIColor.systemMint
         button.layer.cornerRadius = 18
         button.layer.shadowOffset = CGSize(width: 4, height: 4)

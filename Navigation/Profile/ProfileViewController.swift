@@ -62,64 +62,11 @@ final class ProfileViewController: UIViewController {
             profileHeaderView.heightAnchor.constraint(equalToConstant: 220),
 
             setTitleButton.leadingAnchor.constraint(equalTo: profileHeaderView.leadingAnchor, constant: 0),
-            setTitleButton.trailingAnchor.constraint(equalTo: profileHeaderView.trailingAnchor, constant: -4), // прижато с учётом тени
-            setTitleButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16), // привязка к Safe Area
+            setTitleButton.trailingAnchor.constraint(equalTo: profileHeaderView.trailingAnchor, constant: -4),
+            setTitleButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16), 
             setTitleButton.heightAnchor.constraint(equalToConstant: 50)
         ])
     }
 }
 
 
-//class ProfileViewController: UIViewController {
-//
-//    let profileVc = ProfileHeaderView()
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        view.backgroundColor = UIColor(cgColor: CGColor(gray: 100, alpha: 0.7)) // по заданию очень темный
-//
-//        title = "Profile"
-//
-//        view.addSubview(profileVc)
-//    }
-//
-//
-//    override func viewWillLayoutSubviews() {
-//        super.viewWillLayoutSubviews()
-//
-//        profileVc.frame = view.safeAreaLayoutGuide.layoutFrame
-//        profileVc.backgroundColor = .systemGray3
-//
-//        let statusFieldHeight = 40
-//
-//
-//        let textWidth = Int(profileVc.frame.width) - profileVc.avatarWHFull - profileVc.pagePadding
-//        let buttonWidth = Int(profileVc.frame.width) - profileVc.pagePadding * 2
-//
-//        profileVc.avatarTitle.frame = CGRect(x: profileVc.avatarWHFull,
-//                                             y: 27,
-//                                             width: textWidth,
-//                                             height: profileVc.fontSize.avatar.rawValue
-//        )
-//
-//        profileVc.statusLabel.frame = CGRect(x: profileVc.avatarWHFull,
-//                                             y: profileVc.avatarWHFull - 34 - profileVc.fontSize.statusLabel.rawValue,
-//                                             width: textWidth,
-//                                             height: profileVc.fontSize.statusLabel.rawValue
-//        )
-//
-//        profileVc.statusField.frame = CGRect(x: profileVc.avatarWHFull,
-//                                             y: Int(profileVc.statusLabel.frame.maxY) + profileVc.pagePadding,
-//                                             width: textWidth,
-//                                             height: statusFieldHeight
-//        )
-//
-//        profileVc.statusButton.frame = CGRect(x: profileVc.pagePadding,
-//                                              y: Int(profileVc.statusField.frame.maxY) + profileVc.pagePadding,
-//                                              width: buttonWidth,
-//                                              height: 50
-//        )
-//    }
-//}
-//
