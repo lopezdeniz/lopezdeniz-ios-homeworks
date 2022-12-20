@@ -16,4 +16,12 @@ class ProfileViewController1: UIViewController {
     }
 }
 
+
+
+
+
+let universalS = 16.0
+
+let logoVKsize = (w: 100.0, h: 100.0)
+
    

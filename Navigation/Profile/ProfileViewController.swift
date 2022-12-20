@@ -21,8 +21,8 @@ final class ProfileViewController: UIViewController {
     private lazy var setTitleButton: UIButton = {
         let button = UIButton()
         button.setTitle("Set Title", for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 4
+        button.backgroundColor = .systemMint
+        button.layer.cornerRadius = 10
         button.layer.shadowOffset = CGSize(width: 4, height: 4)
         button.layer.shadowRadius = 4
         button.layer.shadowColor = UIColor.black.cgColor

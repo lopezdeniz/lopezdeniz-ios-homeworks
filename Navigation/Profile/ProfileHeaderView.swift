@@ -101,7 +101,7 @@ final class ProfileHeaderView: UIView, UITextFieldDelegate {
     private func setConstraints() {
         NSLayoutConstraint.activate([
 
-            avatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: pagePadding),
+            avatarImageView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: universalS),
             avatarImageView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: pagePadding),
             avatarImageView.widthAnchor.constraint(equalToConstant: avatarSize),
             avatarImageView.heightAnchor.constraint(equalToConstant: avatarSize),
