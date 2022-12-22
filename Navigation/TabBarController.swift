@@ -1,5 +1,5 @@
 //
-//  TabBarControllerViewController.swift
+//  TabBarController.swift
 //  Navigation
 //
 //  Created by MacBook Air on 19.12.2022.
@@ -35,7 +35,7 @@ class TabBarController: UITabBarController {
         }()
 
         viewControllers = [ncFeed, ncProfile]
-        selectedIndex = 0
+        selectedIndex = 1
     }
 }
 

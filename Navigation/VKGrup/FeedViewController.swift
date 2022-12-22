@@ -57,8 +57,7 @@ final class FeedViewController: UIViewController {
     @objc func pressFunc() {
 
         let vcPost = PostViewController()
-        let post = Post(title: "Here you see Post")
-        vcPost.post = post
+        vcPost.post = posts[0]
         navigationController?.pushViewController(vcPost, animated: true)
     }
     
