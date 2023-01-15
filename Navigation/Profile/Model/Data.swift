@@ -7,6 +7,25 @@
 
 import UIKit
 
+enum BackgroundColors {
+    static let mainView: UIColor = .systemGray5  
+    static let tabBar: UIColor = .systemBackground
+    static let profileHeader: UIColor = .systemGray5
+    static let previewCell: UIColor = .white
+    static let postCell: UIColor = .white
+    static let img: UIColor = .black
+    static let headerPreview: UIColor = .white
+}
+
+enum Paddings {
+    static let page: CGFloat = 16
+    static let photosPreview: CGFloat = 12
+    static let photo: CGFloat = 8
+}
+
+ 
+
+
 var posts: [Post] = [
     Post(author: "grup 1",
          image: "grup1",
@@ -30,3 +49,4 @@ var posts: [Post] = [
          views: 7),
 ]
 
+let photos = ["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"]

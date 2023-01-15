@@ -18,6 +18,8 @@ final class ProfileHeaderView: UIView {
             img.layer.cornerRadius = avatarSize / 2
             img.layer.borderWidth = 3
             img.layer.borderColor = UIColor.systemMint.cgColor
+        img.isUserInteractionEnabled = true
+        img.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(avatarAnimation)))
             img.translatesAutoresizingMaskIntoConstraints = false
     
             return img
@@ -74,15 +76,32 @@ final class ProfileHeaderView: UIView {
     
             return button
         }()
+    private lazy var transparentView: UIView = {
+    let view = UIView(frame: CGRect(x: 0, y: -100, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height + 100))
+        view.backgroundColor = .black
+    view.alpha = 0.0
+    return view
+}()
 
+private lazy var buttonX: UIButton = {
+    $0.alpha = 0
+    $0.setImage(UIImage(systemName: "xmark"), for: .normal)
+    $0.tintColor = .white
+    $0.addTarget(self, action: #selector(avatarReturn), for: .touchUpInside)
+    $0.translatesAutoresizingMaskIntoConstraints = false
+    return $0
+}(UIButton())
 
 
     private lazy var statusText: String = ""
-
+    private lazy var tabBar = ((superview as? UITableView)?.dataSource as? UIViewController)?.tabBarController?.tabBar
+    private lazy var avatarCenter = avatarImageView.center
+    private lazy var avatarBounds = avatarImageView.layer.bounds
 
 
     override init(frame: CGRect) {
         super.init(frame: frame)
+        backgroundColor = BackgroundColors.profileHeader
         addSubviews()
         setConstraints()
     }
@@ -91,11 +110,13 @@ final class ProfileHeaderView: UIView {
     }
 
     private func addSubviews() {
-        addSubview(avatarImageView)
         addSubview(fullNameLabel)
         addSubview(statusLabel)
         addSubview(statusTextField)
         addSubview(setStatusButton)
+        addSubview(transparentView)
+        addSubview(avatarImageView)
+        addSubview(buttonX)
     }
 
     private func setConstraints() {
@@ -124,6 +145,8 @@ final class ProfileHeaderView: UIView {
             setStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: universalS),
             setStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -universalS),
             setStatusButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -universalS),
+            buttonX.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Paddings.page),
+            buttonX.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -Paddings.page),
         ])
     }
 
@@ -138,6 +161,40 @@ final class ProfileHeaderView: UIView {
 
     func changeTitle(text: String) {
         fullNameLabel.text = text
+    }
+    
+    @objc func avatarAnimation() {
+        avatarCenter = avatarImageView.center
+        avatarBounds = avatarImageView.bounds
+
+        UIView.animate(withDuration: 0.5) { [self] in
+            transparentView.alpha = 0.7
+            avatarImageView.layer.borderWidth = 0
+            avatarImageView.layer.cornerRadius = 0
+            avatarImageView.center = transparentView.center
+            avatarImageView.layer.bounds = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
+            tabBar?.frame.origin.y = UIScreen.main.bounds.height
+        } completion: { _ in
+            UIView.animate(withDuration: 0.3, delay: 0.0) { [self] in
+                buttonX.alpha = 1
+            }
+        }
+}
+    @objc func avatarReturn() {
+        UIView.animate(withDuration: 0.3) { [self] in
+            buttonX.alpha = 0
+        } completion: { _ in
+            UIView.animate(withDuration: 0.5) { [self] in
+                transparentView.alpha = 0
+                avatarImageView.layer.borderWidth = 3.0
+                avatarImageView.layer.cornerRadius = avatarSize / 2
+                avatarImageView.center = avatarCenter
+                avatarImageView.bounds = avatarBounds
+                if let bar = tabBar {
+                    bar.frame.origin.y = UIScreen.main.bounds.height - bar.frame.height
+                }
+            }
+        }
     }
 }
 
