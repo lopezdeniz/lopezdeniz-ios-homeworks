@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController {
+class ProfileViewController1: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -15,5 +15,13 @@ class ProfileViewController: UIViewController {
         
     }
 }
+
+
+
+
+
+let universalS = 16.0
+
+let logoVKsize = (w: 100.0, h: 100.0)
 
    
