@@ -12,10 +12,10 @@ final class PhotosCollectionViewCell: UICollectionViewCell {
     private lazy var img: UIImageView = {
         $0.backgroundColor = BackgroundColors.img
         $0.clipsToBounds = true
-        $0.contentMode = .scaleAspectFill
+        $0.contentMode = .scaleAspectFill  
         $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
-    }(UIImageView())  
+    }(UIImageView())
 
     override init(frame: CGRect) {
         super.init(frame: .zero)

@@ -57,22 +57,37 @@ func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> U
         return PhotosTableViewCell()
     } else {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: postIdentifier, for: indexPath) as? PostTableViewCell else { fatalError() }
-        cell.config(post: posts[indexPath.row])
+        cell.config(indexPath.row)
         return cell
     }
   }
+    
+    func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
+        indexPath.section == 0 ? .none : .delete
+    }
+
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        tableView.beginUpdates()
+        posts.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        tableView.endUpdates()
+        tableView.reloadData()
+    }
 }
 
 extension ProfileViewController: UITableViewDelegate {
 
-func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    section == 0 ? ProfileHeaderView() : nil
-}
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        section == 0 ? ProfileHeaderView() : nil
+    }
 
-func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    section == 0 ? 220.0 : 0
-}
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        section == 0 ? 220.0 : 0
+    }
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        navigationController?.pushViewController(PhotosViewController(), animated: true)
+        if indexPath.section == 0 {
+            navigationController?.pushViewController(PhotosViewController(), animated: true)
+        }
     }
 }

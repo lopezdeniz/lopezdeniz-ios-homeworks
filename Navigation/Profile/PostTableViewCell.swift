@@ -8,6 +8,9 @@
 import UIKit
 
 final class PostTableViewCell: UITableViewCell {
+    
+    var cellIndex = 0
+    public var depth = true
 
     private lazy var myAuthor: UILabel = {
         $0.font = .boldSystemFont(ofSize: 20)
@@ -28,14 +31,14 @@ final class PostTableViewCell: UITableViewCell {
         $0.font = .systemFont(ofSize: 14)
         $0.textColor = .systemGray
         $0.numberOfLines = 0
-        $0.translatesAutoresizingMaskIntoConstraints = false
         return $0
     }(UILabel())
     
     private lazy var myLikes: UILabel = {
         $0.font = .systemFont(ofSize: 16)
         $0.textColor = .black
-        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.isUserInteractionEnabled = true
+        $0.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(likePlus)))
         return $0
     }(UILabel())
 
@@ -55,6 +58,26 @@ final class PostTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    @objc func likePlus(){
+        posts[cellIndex].likes += 1
+        myLikes.text = "Likes: \(posts[cellIndex].likes)"
+    }
+
+    @objc func showDetails(){
+        posts[cellIndex].views += 1
+        myViews.text = "Views: \(posts[cellIndex].views)"
+
+        if let navigationController = ((superview as? UITableView)?.dataSource as? UIViewController)?.navigationController {
+            let vc = ProfileDetailsViewController()
+            vc.cellIndex = cellIndex
+            vc.depth = false
+            let nc = UINavigationController(rootViewController: vc)
+            nc.modalPresentationStyle = .fullScreen
+            nc.modalTransitionStyle = .flipHorizontal
+            navigationController.present(nc, animated: true)
+        }
+    }
 
     private func addSubviews() {
         contentView.addSubview(myAuthor)
@@ -62,6 +85,7 @@ final class PostTableViewCell: UITableViewCell {
         contentView.addSubview(myDescription)
         contentView.addSubview(myLikes)
         contentView.addSubview(myViews)
+        contentView.subviews.forEach{ $0.translatesAutoresizingMaskIntoConstraints = false }
     }
 
     private func setConstraints() {
@@ -89,12 +113,20 @@ final class PostTableViewCell: UITableViewCell {
         ])
     }
 
-    func config(post: Post) {
+    func config(_ index: Int, _ depth: Bool = true) {
 
-        myAuthor.text = post.author
-        myImage.image = UIImage(named: post.image)
-        myDescription.text = post.description
-        myLikes.text = "Likes: \(post.likes)"
-        myViews.text = "Views: \(post.views)"
+        cellIndex = index
+
+        if depth {
+            myImage.isUserInteractionEnabled = true
+            myImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(showDetails)))
+        }
+
+        myAuthor.text = posts[index].author
+        myImage.image = UIImage(named: posts[index].image)
+        myDescription.text = posts[index].description
+        myLikes.text = "Likes: \(posts[index].likes)"
+        myViews.text = "Views: \(posts[index].views)"
     }
 }
+

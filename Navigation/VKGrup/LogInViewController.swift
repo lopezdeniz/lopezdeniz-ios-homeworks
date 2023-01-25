@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class LogInViewController: UIViewController {
+final class LogInViewController: UIViewController, UITextFieldDelegate {
     
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -44,30 +44,53 @@ final class LogInViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
+    
+    private lazy var wrongLogin: UILabel = {
+        let wrongL = UILabel()
+        wrongL.isHidden = true
+        wrongL.text = "Wrong "
+        wrongL.textColor = .systemRed
+        return wrongL
+    }()
 
     private lazy var loginField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Email or phone"
-        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: universalS, height: 0))
-        textField.leftViewMode = .always
+        textField.placeholder = "Enter email"
         textField.layer.borderColor = UIColor.lightGray.cgColor
         textField.layer.borderWidth = 0.5
         textField.backgroundColor = .systemGray6
+        textField.autocapitalizationType = .none
+        textField.delegate = self
+        textField.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16.0, height: 0))
+        textField.leftViewMode = .always
+        textField.rightView = .some(wrongLogin)
+        textField.rightViewMode = .always
         textField.translatesAutoresizingMaskIntoConstraints = false
-        return textField
+            return textField
+        }()
+    
+    private lazy var wrongPasswowd: UILabel = {
+        let wrongP = UILabel()
+        wrongP.isHidden = true
+        wrongP.textColor = .systemRed
+        return wrongP
     }()
 
     private lazy var passwordField: UITextField = {
         let textField2 = UITextField()
+        
         textField2.placeholder = "Password"
-        textField2.leftView = UIView(frame: CGRect(x: 0, y: 0, width: universalS, height: 0))
-        textField2.leftViewMode = .always
         textField2.isSecureTextEntry = true
         textField2.autocapitalizationType = .none
         textField2.backgroundColor = .systemGray6
         textField2.textColor = .black
         textField2.font = .systemFont(ofSize: 16)
         textField2.tintColor = UIColor(named: "colorVK")
+        textField2.delegate = self
+        textField2.leftView = UIView(frame: CGRect(x: 0, y: 0, width: 16, height: 0))
+        textField2.leftViewMode = .always
+        textField2.rightView = .some(wrongPasswowd)
+        textField2.rightViewMode = .always
         textField2.translatesAutoresizingMaskIntoConstraints = false
         return textField2
     }()
@@ -84,9 +107,51 @@ final class LogInViewController: UIViewController {
         button.clipsToBounds = true
         button.alpha = (button.isSelected || button.isHighlighted ) ? 0.8 : 1.0
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(pressButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(pressLoginButton), for: .touchUpInside)
         return button
     }()
+    
+    @objc func pressLoginButton() {
+        do {
+            let login = try checkLoginField(loginField.text!)
+            wrongLogin.isHidden = true
+            loginField.text = login
+            _ = try checkPasswordField(passwordField.text!)
+            wrongPasswowd.isHidden = true
+
+            if login != "admin@yandex.ru" {
+                let alert = UIAlertController(title: "Attention!", message: "Login is wrong, please enter (admin@yandex.ru)", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .cancel ))
+                present(alert, animated: true, completion: nil)
+            }
+            if passwordField.text! != "1111" {
+                let alert = UIAlertController(title: "Attention!", message: "Password is wrong, please enter (1111)", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: .cancel ))
+                present(alert, animated: true, completion: nil)
+            }
+
+            navigationController?.pushViewController(ProfileViewController(), animated: true)
+
+        } catch errors.loginEmpty {
+            backgroundErrorAnimation(loginField)
+        } catch errors.passwordEmpty {
+            backgroundErrorAnimation(passwordField)
+        } catch errors.notEmail {
+            wrongLogin.isHidden = false
+            loginField.shake1()
+        } catch errors.password(let i) {
+            wrongPasswowd.text = "min " + String(4) + ", iserted " + String(i) + " "
+            wrongPasswowd.isHidden = false
+            passwordField.shake2()
+        } catch {
+            print("Error: ?")
+        }
+    }
+
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        pressLoginButton()
+        return false
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,13 +173,8 @@ final class LogInViewController: UIViewController {
         loginForm.addArrangedSubview(passwordField)
     }
 
-   
-   
-
-
     private func setConstraints() {
         let safeAreaGuide = view.safeAreaLayoutGuide
-
 
         NSLayoutConstraint.activate([
 
@@ -157,11 +217,11 @@ final class LogInViewController: UIViewController {
         ])
     }
     
-    @objc func pressButton() {
-
-        let vcProfile = ProfileViewController()
-        navigationController?.pushViewController(vcProfile, animated: true)
-    }
+//    @objc func pressButton() {
+//
+//        let vcProfile = ProfileViewController()
+//        navigationController?.pushViewController(vcProfile, animated: true)
+//    }
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)

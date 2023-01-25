@@ -55,8 +55,8 @@ final class ProfileHeaderView: UIView {
         field.leftViewMode = .always
         field.delegate = self
         field.clearButtonMode = .whileEditing
-        field.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
-        field.translatesAutoresizingMaskIntoConstraints = false
+//        field.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
+//        field.translatesAutoresizingMaskIntoConstraints = false
         return field
     }()
     
@@ -72,7 +72,7 @@ final class ProfileHeaderView: UIView {
             button.layer.shadowColor = UIColor.black.cgColor
             button.layer.shadowOpacity = 0.7
             button.translatesAutoresizingMaskIntoConstraints = false
-            button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
+            button.addTarget(self, action: #selector(setStatus), for: .touchUpInside)
     
             return button
         }()
@@ -117,52 +117,45 @@ private lazy var buttonX: UIButton = {
         addSubview(transparentView)
         addSubview(avatarImageView)
         addSubview(buttonX)
+        subviews.forEach{ $0.translatesAutoresizingMaskIntoConstraints = false }
     }
 
     private func setConstraints() {
         NSLayoutConstraint.activate([
 
-            avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: universalS),
-            avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: universalS),
+            avatarImageView.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            avatarImageView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             avatarImageView.widthAnchor.constraint(equalToConstant: avatarSize),
             avatarImageView.heightAnchor.constraint(equalToConstant: avatarSize),
 
-            fullNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: universalS),
-            fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: universalS),
-            fullNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -universalS),
+            fullNameLabel.topAnchor.constraint(equalTo: topAnchor, constant: 16),
+            fullNameLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            fullNameLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 
             statusLabel.bottomAnchor.constraint(equalTo: avatarImageView.topAnchor, constant: avatarSize / 2),
-            statusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: universalS),
-            statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -universalS),
+            statusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            statusLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 
             statusTextField.heightAnchor.constraint(equalToConstant: 40),
             statusTextField.bottomAnchor.constraint(equalTo: avatarImageView.bottomAnchor),
-            statusTextField.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: universalS),
-            statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -universalS),
+            statusTextField.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 16),
+            statusTextField.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
 
             setStatusButton.heightAnchor.constraint(equalToConstant: 50),
-            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: universalS),
-            setStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: universalS),
-            setStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -universalS),
-            setStatusButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -universalS),
-            buttonX.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: Paddings.page),
-            buttonX.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -Paddings.page),
+            setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 16),
+            setStatusButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
+            setStatusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            setStatusButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            buttonX.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 16),
+            buttonX.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: -16),
         ])
     }
 
     
-    @objc func buttonPressed() {
+    @objc func changeTitle() {
         statusLabel.text = statusText
     }
 
-    @objc func statusTextChanged() {
-        statusText = statusTextField.text ?? "not input new status yet"
-    }
-
-    func changeTitle(text: String) {
-        fullNameLabel.text = text
-    }
-    
     @objc func avatarAnimation() {
         avatarCenter = avatarImageView.center
         avatarBounds = avatarImageView.bounds
@@ -174,12 +167,14 @@ private lazy var buttonX: UIButton = {
             avatarImageView.center = transparentView.center
             avatarImageView.layer.bounds = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
             tabBar?.frame.origin.y = UIScreen.main.bounds.height
+            
         } completion: { _ in
             UIView.animate(withDuration: 0.3, delay: 0.0) { [self] in
                 buttonX.alpha = 1
             }
         }
-}
+    }
+
     @objc func avatarReturn() {
         UIView.animate(withDuration: 0.3) { [self] in
             buttonX.alpha = 0
@@ -191,15 +186,27 @@ private lazy var buttonX: UIButton = {
                 avatarImageView.center = avatarCenter
                 avatarImageView.bounds = avatarBounds
                 if let bar = tabBar {
-                    bar.frame.origin.y = UIScreen.main.bounds.height - bar.frame.height
+                    bar.frame.origin.y = UIScreen.main.bounds.height - bar.frame.height   
                 }
             }
+        }
+    }
+
+    @objc func setStatus() {
+        do {
+            let status = try checkStatusField(statusTextField.text!)
+            statusLabel.text = status
+            statusTextField.text = status
+        } catch errors.statusEmpty {
+            backgroundErrorAnimation(statusTextField)
+        } catch {
+            print("Error ?")
         }
     }
 }
 
 extension ProfileHeaderView: UITextFieldDelegate {
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         statusLabel.text = statusText
         return false

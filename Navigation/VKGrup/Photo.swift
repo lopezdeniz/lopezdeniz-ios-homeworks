@@ -21,7 +21,7 @@ class Photo: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = BackgroundColors.mainView
         navigationController?.navigationBar.isHidden = false
-        let imgName = name ?? "1s"
+        let imgName = name ?? "1"
         title = imgName
         img.image = UIImage(named: imgName)
         view.addSubview(img)

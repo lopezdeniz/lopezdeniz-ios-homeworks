@@ -78,9 +78,7 @@ private func setConstraints() {
         photoPreview.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -Paddings.photosPreview),
         
     ])
-    print(photoPreview.frame.width)
-    print(self.frame.width)
-    print(UIScreen.main.bounds.width)
+    
     let imgWH = ((UIScreen.main.bounds.width - 2 * Paddings.photosPreview) - countInPreview * Paddings.photo) / (countInPreview + 0.5)
     photoPreview.heightAnchor.constraint(equalToConstant: imgWH).isActive = true
   }
