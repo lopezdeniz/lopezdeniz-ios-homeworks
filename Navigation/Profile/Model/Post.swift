@@ -10,8 +10,11 @@ import UIKit
 
     struct Post {
         
-        let title: String
+        let author, image, description: String
+        var likes, views: Int
+         
     }
    
+
 
 
